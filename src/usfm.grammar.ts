@@ -1,6 +1,7 @@
 export default `
-start
-    = children:(chapter+ / .* { return []; }) {
+start =
+    children:(chapter+ / .* { return []; })
+    {
         return {
             children,
             type: 'root',
@@ -8,8 +9,13 @@ start
         };
     }
 
-chapter
-    = '\c' space id:number newline verses:verse+ {
+chapter =
+    '\c'
+    space
+    id:number
+    newline
+    verses:verse+
+    {
         return {
             id,
             type: 'chapter',
@@ -18,8 +24,13 @@ chapter
         };
     }
 
-verse
-    = '\x0B' space id:number space text:string {
+verse =
+    '\x0B'
+    space
+    id:number
+    space
+    text:string
+    {
         return {
             id,
             text,
@@ -28,21 +39,23 @@ verse
         };
     }
 
-space
-    = ' '
+space =
+    ' '
 
-newline
-    = '\\n'
+newline =
+    '\\n'
 
-number
-    = [0-9]+ {
+number =
+    [0-9]+
+    {
         const input = text();
 
         return parseInt(input);
     }
 
-string
-    = [^\\n]+ {
+string =
+    [^\\n]+
+    {
         return text();
     }
 `;
