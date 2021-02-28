@@ -14,7 +14,16 @@ chapter =
     space
     id:number
     newline
-    verses:verse+
+    verses:(
+        first:verse
+        rest:(newline verse:verse { return verse; })*
+        {
+            return [
+                first,
+                ...rest
+            ];
+        }
+    )
     {
         return {
             id,
