@@ -1,12 +1,32 @@
 export default `
 start
-    = children:(chapter+ / .* { return []; }) { return { type: 'root', children, position: location() }; }
+    = children:(chapter+ / .* { return []; }) {
+        return {
+            children,
+            type: 'root',
+            position: location()
+        };
+    }
 
 chapter
-    = '\c' space id:number newline verses:verse+ { return { type: 'chapter', id, children: verses, position: location() }; }
+    = '\c' space id:number newline verses:verse+ {
+        return {
+            id,
+            type: 'chapter',
+            children: verses,
+            position: location()
+        };
+    }
 
 verse
-    = '\x0B' space id:number space text:string { return { type: 'verse', id, text, position: location() }; }
+    = '\x0B' space id:number space text:string {
+        return {
+            id,
+            text,
+            type: 'verse',
+            position: location()
+        };
+    }
 
 space
     = ' '
@@ -15,8 +35,14 @@ newline
     = '\\n'
 
 number
-    = [0-9]+ { return parseInt(text()); }
+    = [0-9]+ {
+        const input = text();
+
+        return parseInt(input);
+    }
 
 string
-    = [^\\n]+ { return text(); }
+    = [^\\n]+ {
+        return text();
+    }
 `;
