@@ -7,7 +7,7 @@ describe('USFM Parser', function() {
     const parser = new Parser();
 
     describe('#parse()', function() {
-        it("should return a USFMDocument object with 'root' as type, an empty array as children when input is empty string", function() {
+        it("should return USFMDocument with zero children when input is an empty string", function() {
             const actual  = parser.parse('');
 
             const expected: USFMDocument = {
@@ -30,7 +30,7 @@ describe('USFM Parser', function() {
             assert.deepStrictEqual(actual, expected);
         });
 
-        it("should return a USFMDocument object with 'root' as type, an array of Chapter objects as children when input is \\c_#\\n\\v_#_text", function() {
+        it("should return USFMDocument with a Chapter object, that has 1 Verse object, as its only child when input is \\c_#\\n\\v_#_text", function() {
             const result  = parser.parse('\c 1\n\v 1 This is verse 1 of chapter 1.');
 
             const expected: USFMDocument = {
