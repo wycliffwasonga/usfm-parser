@@ -83,6 +83,213 @@ toc_marker =
         };
     }
 
+
+    imt_marker =
+    '\imt'
+    [1-3]?
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+is_marker =
+    '\is'
+    [1-3]?
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+ip_marker =
+    '\ip'
+    indented:'i'?
+    space
+    text:string
+    {
+        return {
+            text,
+            indented: indented !== null
+        };
+    }
+
+im_marker =
+    '\im'
+    indented:'i'?
+    space
+    text:string
+    {
+        return {
+            text,
+            indented: indented !== null
+        };
+    }
+
+ipq_marker =
+    '\ipq'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+imq_marker =
+    '\imq'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+ipr_marker =
+    '\ipr'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+iq_marker =
+    '\iq'
+    [1-3]?
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+ib_marker =
+    '\ib'
+    {
+        return {};
+    }
+
+ili_marker =
+    '\ili'
+    [1-3]?
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+iot_marker =
+    '\iot'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+io_marker =
+    '\io'
+    [1-3]?
+    space
+    text:([^\\(]* { return text(); })
+    '(' reference_range:reference_range ')'
+    {
+        return {
+            text,
+            reference_range
+        };
+    }
+
+ior_marker =
+    '\ior'
+    space
+    '('
+    reference_range:reference_range
+    ')'
+    '\ior*'
+    {
+        return {
+            reference_range
+        };
+    }
+
+iqt_marker =
+    '\iqt'
+    space
+    text:string
+    '\iqt*'
+    {
+        return {
+            text
+        };
+    }
+
+iex_marker =
+    '\iex'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+imte#_marker =
+    '\imte'
+    [1-3]?
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+ie_marker =
+    '\ie'
+    {
+        return {};
+    }
+
+reference_range =
+    start:reference
+    '-'
+    end:(
+        reference / verse:number 
+        { 
+            return {
+                verse,
+                chapter: start.chapter
+            };
+        }
+    )
+    {
+        return {
+            start,
+            end
+        }
+    }
+
+reference =
+    chapter:number '.' verse:number
+    {
+        return {
+            chapter,
+            verse
+        }
+    }
+
 chapter =
     '\c'
     space
