@@ -245,7 +245,7 @@ iex_marker =
         };
     }
 
-imte#_marker =
+imte_marker =
     '\imte'
     [1-3]?
     space
