@@ -1,3 +1,5 @@
+import books from './books';
+
 export default `
 start =
     children:(chapter+ / .* { return []; })
@@ -6,6 +8,78 @@ start =
             children,
             type: 'root',
             position: location()
+        };
+    }
+
+id_marker =
+    '\id'
+    space
+    id:(${books.map(book => `'${book.identifier}'`).join(' / ')})
+    {
+        return {
+            id
+        };
+    }
+
+usfm_marker = 
+    '\x75sfm'
+    space
+    version:string
+    {
+        return {
+            version
+        };
+    }
+
+ide_marker =
+    '\ide'
+    space
+    encoding:('CP-1252' / 'CP-1251' / 'UTF-8' / 'UTF-16')
+    {
+        return {
+            encoding
+        };
+    }
+
+sts_marker =
+    '\sts'
+    space
+    status_code:number
+    {
+        return {
+            status_code
+        };
+    }
+
+rem_marker =
+    '\\rem'
+    space
+    remark:string
+    {
+        return {
+            text: remark
+        };
+    }
+
+h_marker =
+    '\h'
+    space
+    text:string
+    {
+        return {
+            text
+        };
+    }
+
+toc_marker =
+    '\\toc'
+    'a'?
+    [1-3]
+    space
+    text:string
+    {
+        return {
+            text
         };
     }
 

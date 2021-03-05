@@ -26,7 +26,7 @@ describe('Grammar', function() {
                     allowedStartRules: [ 'usfm_marker' ]
                 });
 
-                const input = '\\usfm 3.0';
+                const input = '\x75sfm 3.0';
                 const actual = parser.parse(input);
                 const expected = {
                     version: '3.0'
@@ -125,5 +125,6 @@ describe('Grammar', function() {
                 assert.deepStrictEqual(actual, expected);
             });
         });
+
     });
 });
